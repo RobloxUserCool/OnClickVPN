@@ -1,0 +1,25 @@
+const UUID = "c4e512fa-8b39-4d8b-91d1-678a3c2b9f04"; // Твой UUID из Воркера
+const WORKER_HOST = "weathered-hall-8baa.daniil-suhorukov215.workers.dev";
+
+function toggleVpn() {
+    // Если статус "отключено", собираем конфиг и шлем в Android
+    if (currentStatus === "disconnected") {
+        const config = `vless://${UUID}@${WORKER_HOST}:443?encryption=none&security=tls&sni=${WORKER_HOST}&type=ws&host=${WORKER_HOST}&path=%2F#OnClickVPN`;
+        if (window.Android) {
+            window.Android.startVpn(config);
+        }
+    } else {
+        if (window.Android) {
+            window.Android.stopVpn();
+        }
+    }
+}
+
+// Эту функцию Android вызовет сам, когда VPN подключится или отключится
+function onVpnStatusChanged(status) {
+    if (status === "connected") {
+        // Тут твой код: включить таймер, поменять текст кнопки на DISCONNECT
+    } else {
+        // Тут твой код: остановить таймер, вернуть текст CONNECT
+    }
+}
